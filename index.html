@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ドライイーストに何を入れたらたくさん膨らむかな？</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
+      background: #fffaf2;
+      color: #444;
+      line-height: 1.9;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #fff3d6, #ffe0b3);
+      border-bottom: 5px solid #ffcc66;
+      padding: 28px 16px;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .hero-kobokun,
+    .hero-bread {
+      width: 100px;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .hero-text {
+      text-align: center;
+      flex: 1;
+    }
+
+    .hero-text h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: #c96a00;
+      line-height: 1.4;
+    }
+
+    .hero-text p {
+      margin: 10px 0 0;
+      color: #6a6a6a;
+      font-size: 1rem;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px 32px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.65fr 0.75fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background: #fff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #c96a00;
+      font-size: 1.45rem;
+      border-left: 8px solid #ffcc66;
+      padding-left: 12px;
+    }
+
+    h3 {
+      color: #d87400;
+      margin-top: 28px;
+      margin-bottom: 10px;
+      font-size: 1.15rem;
+    }
+
+    p {
+      margin: 0 0 14px 0;
+    }
+
+    .speech-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 16px 0 20px;
+    }
+
+    .kobokun {
+      width: 110px;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .speech {
+      position: relative;
+      background: #fffdf8;
+      border: 3px solid #ff9966;
+      border-radius: 18px;
+      padding: 14px 16px;
+      flex: 1;
+    }
+
+    .speech::before {
+      content: "";
+      position: absolute;
+      left: -14px;
+      top: 28px;
+      border-width: 10px 14px 10px 0;
+      border-style: solid;
+      border-color: transparent #ff9966 transparent transparent;
+    }
+
+    .speech::after {
+      content: "";
+      position: absolute;
+      left: -9px;
+      top: 30px;
+      border-width: 8px 11px 8px 0;
+      border-style: solid;
+      border-color: transparent #fffdf8 transparent transparent;
+    }
+
+    .lead-box,
+    .memo-box,
+    .result-box {
+      background: #fff7e8;
+      border: 2px dashed #ffb366;
+      border-radius: 16px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 20px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      border: 1px solid #f0d5b2;
+      padding: 12px 10px;
+      text-align: center;
+      background: #fffdf9;
+      vertical-align: middle;
+    }
+
+    .compare-table th {
+      background: #ffe9bf;
+      color: #9a5900;
+      font-weight: bold;
+    }
+
+    .experiment-list {
+      background: #fffdf8;
+      border: 2px solid #ffd29a;
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin: 14px 0 20px;
+    }
+
+    .experiment-list ul,
+    .memo-box ul,
+    .result-box ul {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+
+    .photo-section {
+      margin-top: 22px;
+      padding-top: 8px;
+    }
+
+    .timeline-note {
+      background: #fff4dd;
+      border-left: 6px solid #ffbf66;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0 20px;
+    }
+
+    .photo-card {
+      background: #fffaf4;
+      border: 2px solid #f4dcc0;
+      border-radius: 18px;
+      padding: 16px;
+      margin: 16px 0 22px;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+      margin-top: 12px;
+      display: block;
+    }
+
+    .photo-caption {
+      margin-top: 10px;
+      color: #666;
+      font-size: 0.98rem;
+    }
+
+    .sidebar-title {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #c96a00;
+    }
+
+    .next-card {
+      background: #fff7ef;
+      border: 2px dashed #f0c58a;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .next-card h3 {
+      margin-top: 0;
+      font-size: 1.05rem;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #ffe4bf;
+      color: #9a5900;
+      font-size: 0.85rem;
+      border-radius: 999px;
+      padding: 4px 10px;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      padding: 28px 16px 36px;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-inner {
+        flex-direction: column;
+      }
+
+      .hero-kobokun,
+      .hero-bread {
+        width: 80px;
+      }
+
+      .hero-text h1 {
+        font-size: 1.5rem;
+      }
+
+      .speech-row {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .speech::before,
+      .speech::after {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <img src="kobokun.png" alt="こうぼくん" class="hero-kobokun">
+
+      <div class="hero-text">
+        <h1>ドライイーストに何を入れたら<br>たくさん膨らむかな？</h1>
+        <p>おうちで考える、発酵の条件の実験</p>
+      </div>
+
+      <img src="bread.png" alt="パンのイメージ" class="hero-bread">
+    </div>
+  </header>
+
+  <main>
+    <div class="layout">
+
+      <article class="panel">
+        <h2>きっかけ</h2>
+
+        <div class="speech-row">
+          <img src="kobokun.png" alt="こうぼくん" class="kobokun">
+          <div class="speech">
+            こうぼくん「常温発酵させたあと一晩ねかせたパン生地がしぼんだ！ なんで？」
+          </div>
+        </div>
+
+        <div class="lead-box">
+          パン作りの中で、ふくらんでいた生地がしぼんでしまいました。<br>
+          そこで、これまでのパン作りをくらべながら、
+          「発酵ってそもそも何？」「どんな条件で発酵はすすむの？」を考えることにしました。
+        </div>
+
+        <h2>パン作りの経験を比較で振り返る</h2>
+
+        <p>
+          しぼんだ理由を考えるために、これまでのパン作りの経験をくらべてみました。
+          今回、初めて経験したのは
+          <strong>「常温で、長い時間おいた」</strong> という条件でした。
+        </p>
+
+        <h3>温度と時間でくらべてみた</h3>
+
+        <table class="compare-table">
+          <tr>
+            <th>ケース</th>
+            <th>温度</th>
+            <th>時間</th>
+            <th>結果</th>
+          </tr>
+          <tr>
+            <td>① これまでの成功</td>
+            <td>常温</td>
+            <td>短い</td>
+            <td>ふくらんだ</td>
+          </tr>
+          <tr>
+            <td>② これまでの成功</td>
+            <td>低温</td>
+            <td>長い</td>
+            <td>しぼまなかった</td>
+          </tr>
+          <tr>
+            <td>③ 今回</td>
+            <td>常温</td>
+            <td>長い</td>
+            <td>しぼんだ</td>
+          </tr>
+        </table>
+
+        <div class="speech-row">
+          <img src="kobokun.png" alt="こうぼくん" class="kobokun">
+          <div class="speech">
+            こうぼくん「温度が高くて、時間も長かったから、発酵しすぎて生地が爆発したんじゃない？」
+          </div>
+        </div>
+
+        <div class="memo-box">
+          でも、それだけでは説明しきれないかもしれません。<br>
+          ここから、「発酵の条件」をもっとたしかめたい、という新しい問いが生まれました。
+        </div>
+
+        <h2>発酵の条件をさぐる</h2>
+
+        <div class="speech-row">
+          <img src="kobokun.png" alt="こうぼくん" class="kobokun">
+          <div class="speech">
+            こうぼくん「発酵ってそもそも何？ どんな条件で発酵はすすむの？」
+          </div>
+        </div>
+
+        <p>こうぼくんは、まずこんなことを考えました。</p>
+
+        <div class="speech-row">
+          <img src="kobokun.png" alt="こうぼくん" class="kobokun">
+          <div class="speech">
+            こうぼくん「乾燥イーストだと菌は働かないから、水分が必要だと思う。」
+          </div>
+        </div>
+
+        <p>
+          そして、
+          「水か、いつもパン作りのときにドライイーストを沈めている牛乳の影響も気になる」
+          と考えました。
+        </p>
+
+        <div class="speech-row">
+          <img src="kobokun.png" alt="こうぼくん" class="kobokun">
+          <div class="speech">
+            こうぼくん「単に甘くしたいだけなら、砂糖をあとで外側にまぶしてもいいよね。なんで入れるんだろう。」
+          </div>
+        </div>
+
+        <div class="speech-row">
+          <img src="kobokun.png" alt="こうぼくん" class="kobokun">
+          <div class="speech">
+            こうぼくん「砂糖は元素表にないぞ。どういうものなんだろう。」
+          </div>
+        </div>
+
+        <p>
+          こうして、今回は
+          <strong>「水か牛乳か」</strong> と
+          <strong>「砂糖があるかないか」</strong>
+          をくらべることにしました。
+        </p>
+
+        <h3>今回の実験</h3>
+        <div class="experiment-list">
+          4つの袋をつくって、ちがいを観察しました。
+          <ul>
+            <li>ドライイーストと水</li>
+            <li>ドライイーストと水と砂糖</li>
+            <li>ドライイーストと牛乳</li>
+            <li>ドライイーストと牛乳と砂糖</li>
+          </ul>
+        </div>
+
+        <h2>時間で変わる様子を見てみよう</h2>
+
+        <div class="timeline-note">
+          今回は、同じ実験を時間を追って観察しました。<br>
+          「最初はどうだったか」「いつ差が出はじめたか」「最後にどうなったか」を見ていきます。
+        </div>
+
+        <div class="photo-section">
+          <div class="photo-card">
+            <h3>最初のようす</h3>
+            <p>
+              まずは4つの袋を同じように並べて、実験を始めました。
+            </p>
+            <img src="photo-0min.jpg" alt="実験開始時の4つの袋の写真">
+            <div class="photo-caption">
+              ドライイーストと水、ドライイーストと水と砂糖、ドライイーストと牛乳、ドライイーストと牛乳と砂糖を比べます。
+            </div>
+          </div>
+
+          <div class="photo-card">
+            <h3>16分後</h3>
+            <p>
+              砂糖ありの袋に、早くも泡が出てきました。<br>
+              さらに、水のほうは泡が細かく、牛乳のほうは泡が大きく見えました。
+            </p>
+            <img src="photo-16min.jpg" alt="16分後の4つの袋の写真">
+            <div class="photo-caption">
+              変化が出たかどうかだけでなく、泡の細かさや大きさにも違いがあることに気づきました。
+            </div>
+          </div>
+
+          <div class="photo-card">
+            <h3>33分後</h3>
+            <p>
+              時間がたつと、泡やふくらみの差がさらに見えやすくなってきました。<br>
+              条件の違いが、少しずつ目に見える形で表れてきます。
+            </p>
+            <img src="photo-33min.jpg" alt="33分後の4つの袋の写真">
+            <div class="photo-caption">
+              「どの袋が早く変化するか」を比べると、発酵の進み方の違いが見えてきます。
+            </div>
+          </div>
+
+          <div class="photo-card">
+            <h3>147分後</h3>
+            <p>
+              砂糖を入れた2つの袋はパンパンに膨らみました。<br>
+              一方で、砂糖なしの袋はふくらみ方が小さく、差がはっきり見えました。
+            </p>
+            <img src="photo-147min.jpg" alt="147分後の4つの袋の写真">
+            <div class="photo-caption">
+              時間がたつほど、砂糖の有無による違いが目立つようになりました。
+            </div>
+          </div>
+        </div>
+
+        <h2>こうぼくんの考え</h2>
+
+        <div class="result-box">
+          今回の実験では、
+          <strong>砂糖があると泡が出やすく、袋もよく膨らむ</strong>
+          ことが見えてきました。<br>
+          また、
+          <strong>水と牛乳では泡のようすにも違いがある</strong>
+          ことにも気づきました。
+        </div>
+
+        <p>
+          つまり、発酵には温度や時間だけでなく、
+          <strong>入れるもののちがい</strong> も関係していそうです。
+        </p>
+
+        <div class="speech-row">
+          <img src="kobokun.png" alt="こうぼくん" class="kobokun">
+          <div class="speech">
+            こうぼくん「発酵って、温度と時間だけじゃないんだね。何を入れるかでも、進み方が変わるのかも。」
+          </div>
+        </div>
+
+        <h2>次はどうする？</h2>
+
+        <div class="memo-box">
+          今回見えてきたことから、次はこんな実験につながります。
+          <ul>
+            <li>塩を入れるとどうなる？</li>
+            <li>水の温度でちがう？</li>
+            <li>砂糖の量でちがう？</li>
+          </ul>
+        </div>
+      </article>
+
+      <aside class="panel">
+        <h2 class="sidebar-title">つぎの実験はこちら</h2>
+
+        <div class="next-card">
+          <div class="tag">NEXT</div>
+          <h3>塩を入れるとどうなる？</h3>
+          <p>発酵を止めるのかな。少しだけ入れたときはどうなる？</p>
+        </div>
+
+        <div class="next-card">
+          <div class="tag">NEXT</div>
+          <h3>水の温度でちがう？</h3>
+          <p>つめたい水とあたたかい水では、泡の出方は変わるかな。</p>
+        </div>
+
+        <div class="next-card">
+          <div class="tag">NEXT</div>
+          <h3>砂糖の量でちがう？</h3>
+          <p>少しだけでも変わるのか、たくさん入れるとどうなるのか。</p>
+        </div>
+
+        <div class="next-card">
+          <div class="tag">SERIES</div>
+          <h3>おうち実験をつづけよう</h3>
+          <p>このページは、こうぼくんといっしょに考える実験シリーズの1回目です。</p>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer>
+    おうちで考える科学実験シリーズ
+  </footer>
+
+</body>
+</html>
